@@ -1,0 +1,175 @@
+--
+-- File generated with SQLiteStudio v3.3.3 on Sun Apr 10 23:59:52 2022
+--
+-- Text encoding used: System
+--
+PRAGMA foreign_keys = off;
+BEGIN TRANSACTION;
+
+-- Table: Appointments
+CREATE TABLE "Appointments" (
+	"AppointmentID"	TEXT NOT NULL,
+	"LeadID"	TEXT NOT NULL,
+	"AppointmentDate"	TEXT NOT NULL,
+	"StaffID"	TEXT,
+	"Confimed"	TEXT,
+	FOREIGN KEY("StaffID") REFERENCES "User"("UserID"),
+	FOREIGN KEY("LeadID") REFERENCES "Lead"("LeadID"),
+	PRIMARY KEY("AppointmentID")
+);
+
+-- Table: AuditHistory
+CREATE TABLE "AuditHistory" (
+	"AuditHistoryID"	TEXT NOT NULL,
+	"UnitID"	TEXT NOT NULL,
+	"AuditDate"	TEXT NOT NULL,
+	"PreviousStatus"	TEXT NOT NULL,
+	"CurrentStatus"	TEXT NOT NULL,
+	FOREIGN KEY("UnitID") REFERENCES "Unit"("UnitNumber"),
+	PRIMARY KEY("AuditHistoryID")
+);
+
+-- Table: Booking
+CREATE TABLE "Booking" (
+	"BookingID"	TEXT NOT NULL,
+	"UnitID"	TEXT NOT NULL,
+	"TenantID"	TEXT NOT NULL,
+	"NoofInstalments"	INTEGER NOT NULL,
+	"TenancyStartDate"	TEXT NOT NULL,
+	"TenancyEndDate"	TEXT NOT NULL,
+	"SecurityDeposit"	NUMERIC,
+	"Discount"	NUMERIC,
+	"RentPerMonth"	NUMERIC NOT NULL,
+	"TotalLeasePrice"	NUMERIC NOT NULL,
+	"BookingStatus"	TEXT NOT NULL,
+	"LeaseAdvisorID"	TEXT NOT NULL,
+	PRIMARY KEY("BookingID"),
+	FOREIGN KEY("TenantID") REFERENCES "Tenant"("TenantID"),
+	FOREIGN KEY("UnitID") REFERENCES "Unit"("UnitNumber"),
+	FOREIGN KEY("LeaseAdvisorID") REFERENCES "User"("UserID")
+);
+
+-- Table: Lead
+CREATE TABLE "Lead" (
+	"LeadID"	TEXT NOT NULL,
+	"Title"	TEXT,
+	"FirstName"	TEXT NOT NULL,
+	"MiddleName"	TEXT,
+	"LastName"	TEXT NOT NULL,
+	"EmailID"	TEXT UNIQUE,
+	"ContactNumber"	TEXT UNIQUE,
+	"Nationality"	TEXT,
+	"JobTitle"	TEXT,
+	"Gender"	TEXT,
+	"NoofBedroomPreference"	INTEGER,
+	"PropertyID"	TEXT,
+	"LeadCreationDate"	TEXT NOT NULL,
+	FOREIGN KEY("PropertyID") REFERENCES "Property"("PropertyID")
+);
+INSERT INTO Lead (LeadID, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender, NoofBedroomPreference, PropertyID, LeadCreationDate) VALUES ('L101', 'Mr', 'John', '', 'Lewis', 'johnlewis91@gmail.com', '03456767678', 'Italian', 'CNC Operator', 'Male', 2, NULL, '');
+INSERT INTO Lead (LeadID, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender, NoofBedroomPreference, PropertyID, LeadCreationDate) VALUES ('L102', 'Miss', 'Mary', 'Anna', 'Jacob', 'maryjacob@gmail.com', '09876545678', 'Indian', 'IT coordinator', 'Female', 2, NULL, '');
+INSERT INTO Lead (LeadID, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender, NoofBedroomPreference, PropertyID, LeadCreationDate) VALUES ('L105', 'Miss', 'Tina', '', 'Strong', 'tinastrong@yahoo.com', '07774446799', 'Canadian', 'Machine Operator', 'Female', 2, NULL, '');
+INSERT INTO Lead (LeadID, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender, NoofBedroomPreference, PropertyID, LeadCreationDate) VALUES ('L106', 'Miss', 'Alana', '', 'Duke', 'alanaduke34@gmail.com', '06654578589', 'Algerian', 'Production Associate', 'Female', 1, NULL, '');
+INSERT INTO Lead (LeadID, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender, NoofBedroomPreference, PropertyID, LeadCreationDate) VALUES ('L103', 'Miss', 'Jane', '', 'Austen', 'janeauten6@yahoo.com', '09845689989', 'Brazilian', 'Computer Associate', 'Female', 1, NULL, '');
+INSERT INTO Lead (LeadID, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender, NoofBedroomPreference, PropertyID, LeadCreationDate) VALUES ('L104', 'Mr', 'Anil', '', 'Sambhasivan', 'anisam@gmail.com', '09876542345', 'Indian', 'Project Manager', 'Male', 2, NULL, '');
+INSERT INTO Lead (LeadID, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender, NoofBedroomPreference, PropertyID, LeadCreationDate) VALUES ('L107', 'Mr', 'Tammy', '', 'Keller', 'tammykeller@yahoo.com', '03457986425', 'Brazilian', 'Production Associate', 'Male', 1, NULL, '');
+INSERT INTO Lead (LeadID, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender, NoofBedroomPreference, PropertyID, LeadCreationDate) VALUES ('L108', 'Mr', 'Leon', '', 'Harrelle', 'leonharrell@gmail.com', '07532568879', 'Canadian', 'Cashier', 'Male', 2, NULL, '');
+INSERT INTO Lead (LeadID, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender, NoofBedroomPreference, PropertyID, LeadCreationDate) VALUES ('L109', 'Mr', 'Loren', NULL, 'Mccall', 'lornmcall@gmail.com', '09863456787', 'Brazilian', 'Computer Associate', 'Male', 1, NULL, '');
+INSERT INTO Lead (LeadID, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender, NoofBedroomPreference, PropertyID, LeadCreationDate) VALUES ('L110', 'Mrs', 'Elizabeth', '', 'Zhang', 'elizabethzhang@gmail.com', '09535678987', 'Chinese', 'Production Controller', 'Female', 2, NULL, '');
+INSERT INTO Lead (LeadID, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender, NoofBedroomPreference, PropertyID, LeadCreationDate) VALUES ('L111', 'Miss', 'Anna', '', 'Wall', 'annawall89@gmail.com', '02345676789', 'Austrian', 'Cashier', 'Female', 2, NULL, '');
+INSERT INTO Lead (LeadID, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender, NoofBedroomPreference, PropertyID, LeadCreationDate) VALUES ('L112', 'Miss', 'Alice', '', 'Mendez', 'alicemendez@gmail.com', '03456782345', 'Austrian', 'IT support Associate', 'Female', 2, NULL, '');
+INSERT INTO Lead (LeadID, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender, NoofBedroomPreference, PropertyID, LeadCreationDate) VALUES ('L113', 'Mr', 'Damon', '', 'Salvatore', 'damonsalvatore@gmail.com', '03456783458', 'Spanish', 'Cashier', 'Male', 2, NULL, '');
+INSERT INTO Lead (LeadID, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender, NoofBedroomPreference, PropertyID, LeadCreationDate) VALUES ('L114', 'Mrs', 'Jasmine', NULL, 'Peterson', 'jasminepeterson@yahoo.com', '02346842567', 'Spanish', 'IT Coordinator', 'Female', 1, NULL, '');
+INSERT INTO Lead (LeadID, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender, NoofBedroomPreference, PropertyID, LeadCreationDate) VALUES ('L115', 'Miss', 'Natasha', '', 'Carey', 'natashacarey@gmail.com', '03456783456', 'Canadian', 'Project Manager', 'Female', 2, NULL, '');
+
+-- Table: PaymentPlanItems
+CREATE TABLE "PaymentPlanItems" (
+	"PaymentPlanItemID"	TEXT NOT NULL,
+	"BookingID"	TEXT NOT NULL,
+	"TenantID"	TEXT NOT NULL,
+	"DueDate"	TEXT NOT NULL,
+	"InstalmentNumber"	INTEGER NOT NULL,
+	"InstalmentAmount"	NUMERIC NOT NULL,
+	FOREIGN KEY("BookingID") REFERENCES "Booking"("BookingID"),
+	FOREIGN KEY("TenantID") REFERENCES "Tenant"("TenantID"),
+	PRIMARY KEY("PaymentPlanItemID")
+);
+
+-- Table: Project
+CREATE TABLE "Project" (
+	"ProjectID"	TEXT NOT NULL,
+	"ProjectName"	TEXT NOT NULL UNIQUE,
+	"NoofProperties"	INTEGER NOT NULL,
+	PRIMARY KEY("ProjectID")
+);
+
+-- Table: Property
+CREATE TABLE "Property" (
+	"PropertyID"	TEXT NOT NULL,
+	"ProjectID"	TEXT NOT NULL,
+	"PropertyName"	TEXT NOT NULL UNIQUE,
+	"Location"	TEXT NOT NULL,
+	FOREIGN KEY("ProjectID") REFERENCES "Project"("ProjectID"),
+	PRIMARY KEY("PropertyID")
+);
+
+-- Table: Tenant
+CREATE TABLE "Tenant" (
+	"TenantID"	TEXT NOT NULL,
+	"LeadID"	TEXT,
+	"TenantType"	TEXT NOT NULL,
+	"Title"	TEXT,
+	"FirstName"	TEXT NOT NULL,
+	"MiddleName"	TEXT,
+	"LastName"	TEXT NOT NULL,
+	"EmailID"	TEXT NOT NULL UNIQUE,
+	"ContactNumber"	TEXT NOT NULL UNIQUE,
+	"Nationality"	TEXT,
+	"JobTitle"	TEXT,
+	"Gender"	TEXT,
+	FOREIGN KEY("LeadID") REFERENCES "Lead"("LeadID"),
+	PRIMARY KEY("TenantID")
+);
+INSERT INTO Tenant (TenantID, LeadID, TenantType, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender) VALUES ('T101', 'L101', 'Prospect', 'Mr', 'John', NULL, 'Lewis', 'johnlewis91@gmail.com', '3456767678', 'Italian', 'CNC Operator', 'Male');
+INSERT INTO Tenant (TenantID, LeadID, TenantType, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender) VALUES ('T102', 'L102', 'Prospect', 'Miss', 'Mary', 'Anna', 'Jacob', 'maryjacob@gmail.com', '9876545678', 'Indian', 'IT coordinator', 'Female');
+INSERT INTO Tenant (TenantID, LeadID, TenantType, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender) VALUES ('T103', 'L103', 'Prospect', 'Miss', 'Jane', NULL, 'Austen', 'janeauten6@yahoo.com', '9845689989', 'Brazilian', 'Computer Associate', 'Female');
+INSERT INTO Tenant (TenantID, LeadID, TenantType, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender) VALUES ('T104', 'L104', 'Prospect', 'Mr', 'Anil', NULL, 'Sambhasivan', 'anisam@gmail.com', '9876542345', 'Indian', 'Project Manager', 'Male');
+INSERT INTO Tenant (TenantID, LeadID, TenantType, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender) VALUES ('T105', 'L105', 'Prospect', 'Miss', 'Tina', NULL, 'Strong', 'tinastrong@yahoo.com', '7774446799', 'Canadian', 'Machine Operator', 'Female');
+INSERT INTO Tenant (TenantID, LeadID, TenantType, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender) VALUES ('T106', 'L106', 'Prospect', 'Miss', 'Alana', NULL, 'Duke', 'alanaduke34@gmail.com', '6654578589', 'Algerian', 'Production Associate', 'Female');
+INSERT INTO Tenant (TenantID, LeadID, TenantType, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender) VALUES ('T107', 'L107', 'Prospect', 'Mr', 'Tammy', NULL, 'Keller', 'tammykeller@yahoo.com', '3457986425', 'Brazilian', 'Production Associate', 'Male');
+INSERT INTO Tenant (TenantID, LeadID, TenantType, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender) VALUES ('T108', 'L108', 'Prospect', 'Mr', 'Leon', NULL, 'Harrelle', 'leonharrell@gmail.com', '7532568879', 'Canadian', 'Cashier', 'Male');
+INSERT INTO Tenant (TenantID, LeadID, TenantType, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender) VALUES ('T109', 'L109', 'Prospect', 'Mr', 'Loren', NULL, 'Mccall', 'lornmcall@gmail.com', '9863456787', 'Brazilian', 'Computer Associate', 'Male');
+INSERT INTO Tenant (TenantID, LeadID, TenantType, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender) VALUES ('T110', 'L110', 'Prospect', 'Mrs', 'Elizabeth', NULL, 'Zhang', 'elizabethzhang@gmail.com', '9535678987', 'Chinese', 'Production Controller', 'Female');
+INSERT INTO Tenant (TenantID, LeadID, TenantType, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender) VALUES ('T111', 'L111', 'Prospect', 'Miss', 'Anna', NULL, 'Wall', 'annawall89@gmail.com', '2345676789', 'Austrian', 'Cashier', 'Female');
+INSERT INTO Tenant (TenantID, LeadID, TenantType, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender) VALUES ('T112', 'L112', 'Prospect', 'Miss', 'Alice', NULL, 'Mendez', 'alicemendez@gmail.com', '3456782345', 'Austrian', 'IT support Associate', 'Female');
+INSERT INTO Tenant (TenantID, LeadID, TenantType, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender) VALUES ('T113', 'L113', 'Prospect', 'Mr', 'Damon', NULL, 'Salvatore', 'damonsalvatore@gmail.com', '3456783458', 'Spanish', 'Cashier', 'Male');
+INSERT INTO Tenant (TenantID, LeadID, TenantType, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender) VALUES ('T114', 'L114', 'Prospect', 'Mrs', 'Jasmine', NULL, 'Peterson', 'jasminepeterson@yahoo.com', '2346842567', 'Spanish', 'IT Coordinator', 'Female');
+INSERT INTO Tenant (TenantID, LeadID, TenantType, Title, FirstName, MiddleName, LastName, EmailID, ContactNumber, Nationality, JobTitle, Gender) VALUES ('T115', 'L115', 'Prospect', 'Miss', 'Natasha', NULL, 'Carey', 'natashacarey@gmail.com', '3456783456', 'Canadian', 'Project Manager', 'Female');
+
+-- Table: Unit
+CREATE TABLE "Unit" (
+	"UnitNumber"	TEXT NOT NULL,
+	"ProjectID"	TEXT NOT NULL,
+	"PropertyID"	TEXT NOT NULL,
+	"Type"	TEXT NOT NULL,
+	"RentperMonth"	NUMERIC NOT NULL,
+	"NoofBedrooms"	INTEGER,
+	"NoofBathrooms"	INTEGER,
+	"Floor"	INTEGER,
+	"TotalArea(SqFt)"	INTEGER,
+	"ParkingBayNumber"	TEXT,
+	"SecurityDeposit"	NUMERIC,
+	"UnitStatus"	TEXT NOT NULL,
+	FOREIGN KEY("PropertyID") REFERENCES "Property"("PropertyID"),
+	FOREIGN KEY("ProjectID") REFERENCES "Project"("ProjectID"),
+	PRIMARY KEY("UnitNumber")
+);
+
+-- Table: User
+CREATE TABLE User (UserID TEXT NOT NULL, UserType TEXT NOT NULL, Username TEXT NOT NULL UNIQUE, Password TEXT NOT NULL, PRIMARY KEY (UserID));
+INSERT INTO User (UserID, UserType, Username, Password) VALUES ('3', 'Tenant', 'johnlewis91@gmail.com', 'john');
+INSERT INTO User (UserID, UserType, Username, Password) VALUES ('2', 'Staff', 'ben@greencorp.com', 'ben');
+INSERT INTO User (UserID, UserType, Username, Password) VALUES ('1', 'Admin', 'admin@greencorp.com', 'admin');
+
+COMMIT TRANSACTION;
+PRAGMA foreign_keys = on;
